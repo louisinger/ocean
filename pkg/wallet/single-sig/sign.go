@@ -420,5 +420,6 @@ func signTaproot(
 			PubKey:    schnorr.SerializePubKey(pubkey),
 			Signature: sig,
 		},
+		LeafHash: leafHash[:],
 	}, nil
 }
