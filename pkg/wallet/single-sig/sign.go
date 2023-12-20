@@ -395,12 +395,11 @@ func signTaproot(
 
 	input := ptx.Inputs[inIndex]
 	prevoutScripts := [][]byte{input.GetUtxo().Script}
-	prevoutAssets := [][]byte{input.ExplicitAsset}
-	value, _ := elementsutil.ValueToBytes(input.ExplicitValue)
-	prevoutValues := [][]byte{value}
+	prevoutAssets := [][]byte{input.GetUtxo().Asset}
+	prevoutValues := [][]byte{input.GetUtxo().Value}
 
 	hashForSignature := unsignedTx.HashForWitnessV1(
-		inIndex, prevoutScripts, prevoutAssets, prevoutValues, sighashType, genesisBlockHash, nil, nil,
+		inIndex, prevoutScripts, prevoutAssets, prevoutValues, sighashType, genesisBlockHash, leafHash, nil,
 	)
 	signature, err := schnorr.Sign(prvkey, hashForSignature[:])
 	if err != nil {
